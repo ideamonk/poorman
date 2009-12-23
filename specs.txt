@@ -23,7 +23,7 @@ On master
 On slave
 
 PoorData
-    [ data, mime ]                --> has id
+    [ data | mime ]                --> has id
 
 PoorConfig
     [ whoismydaddy ]        --> for who ma bell tolls
