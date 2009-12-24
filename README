@@ -116,7 +116,7 @@ API -
                  This is a poor form of security, but as for now this is
                  what is there.
 
-        /set
+        /set                                                                [+]
             verify master
             determine mime
             if keyname='None'

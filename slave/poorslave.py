@@ -5,7 +5,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import urllib2
 
-__LINK__ = 'mypassword'
+__LINK__ = 'bXlwYXNzd29yZGlzc29zaW1wbGUK'
 
 class DataStore(db.Model):
     data = db.BlobProperty()
@@ -16,17 +16,31 @@ class SetData(webapp.RequestHandler):
         self.post()
 
     def post(self):
-        '''
-        auth  >>  add [data,mime] to your datastore  >>  return the keyname
-        '''
         self.response.headers['Content-Type'] = 'text/plain'
-        if self.request.get('link') == __LINK__:
-            new_content = DataStore(data=db.Blob(str(self.request.get('data'))),
-                                                mime=self.request.get('mime'))
+        
+        # TODO: verify is referer is __MASTER__
+        keyrequest = self.request.get('keyname')
+        data_received = db.Blob(str(self.request.get('data'))
+        mime = self.request.get('mime')
+        
+        if (keyrequest == 'None'):
+            # new data
+            new_content = DataStore(data=data_received, mime=mime)
             new_content.put()
             self.response.out.write (new_content.key())
         else:
-            self.response.out.write("You do not have authority over this poor man's slave.")
+            # old data to be replaced
+            if self.request.get('link') == __LINK__:
+                try:
+                    content = DataStore.get(keyrequest)
+                    content.data = data_received
+                    content.mime = mime
+                    content.put()
+                    self.response.out.write (content.key())
+                except db.KindError:
+                    self.response.out.write ("key not found")
+            else:
+                self.response.out.write("no authority on slave")
 
 class GetData(webapp.RequestHandler):
     def get(self,keyname):
