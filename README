@@ -54,10 +54,10 @@ Models -
 
     On Master -
         MasterDataStore
-            keyname, slave_url, slave_key_name
+            keyname, slave, slave_key_name
 
         PoorSlaves
-            slave_url, bytes
+            slave, bytes
 
 
     On Slave -
@@ -70,7 +70,7 @@ API -
 
     On Master -
     
-        >   set_data(_key, data, mime):
+        >   set_data(_key, data, mime):                                     [+]
                 if _key exists in MasterDataStore:
                     call slave_url/set/ pass keyname=_key
                 else
@@ -80,32 +80,32 @@ API -
                 on success make [ keyname, slave_url, slave_key_name ] entry
                 on fail notify
 
-        >   get_url(_key):
+        >   get_url(_key):                                                  [ ]
                 look for which slave has _key
                 return http://slave/get/slave_key_name
 
-        >   get_data(_key):
+        >   get_data(_key):                                                 [ ]
                 url = get_url(_key)
                 fetch(url), ignore 1st mime line
                 return remaining stripped data
             * NOTE - this is very slow and resource consuming and not advisable
 
-        >   del_data(_key):
+        >   del_data(_key):                                                 [ ]
                 if _key exists:
                     fetch ( http://slave_url/del/slave_key_name )
 
-        >   update_stats():
+        >   update_stats():                                                 [ ]
                 for each slave:
                     query for free bytes
                 return a JSON
 
-        >   get_upload_box(_key, extra):
+        >   get_upload_box(_key, extra):                                    [ ]
                 returns a basic form with a file upload element with appropriate
                 target, methods, etc.
                 target - http://slave_url/upload/
                 extra - can be used to put class, style, etc into form
 
-        /add_upload
+        /add_upload                                                         [ ]
             verify link
             add meta info
             
@@ -145,4 +145,9 @@ API -
                 pass link, added key
 
 
-                
+Legend -
+--------
+
+    [ ]     - unfinished
+    [+]     - implemented
+    [+]t    - tested
