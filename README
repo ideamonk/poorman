@@ -1,0 +1,43 @@
+Thu Dec 24 07:16:53 IST 2009             Abhishek Mishra <ideamonk at gmail.com>
+
+                         -=========================-
+                         |   PoorMan's DataStore   |
+                         -=========================-
+
+Preface -
+
+    Yes I'm a Freetard, and my crime is of having a leecher's mentality. Maybe
+    I don't have the same attitude towards a penny in my hand, or anything that
+    has to do with the real world. But when it comes to something that is free
+    or even partially free and is something awesome, yes I admit I would love to
+    leech it more. PoorMan's DataStore is an expression of such desires.
+    Put simply, the desire of not having to invest. But that's a lie, you see
+    investment not always has to do with money, it includes time and energy too.
+
+
+Purpose -
+
+    To allow people to use google appengine's DataStore in a distributed way,
+    so as to be able to store more than a gigabyte of data - the current quota
+    on free users.
+    
+    To provide an API so that anyone can easily configure, reuse and hack ahead.
+    
+    To demonstrate the above mentioned purpose with help of a live example that
+    utilizes the PoorMan API
+
+Definitions -
+
+    Slave -
+
+        This is an appengine app, whose sole purpose is to store the data given
+        to it, give information about number of bytes stored in its DataStore,
+        to delete/modify/serve data when asked to. It would also take care of
+        the mimetypes and server content appropriately.
+        
+    Master -
+    
+        This where you utilize the PoorMan API to store or retrieve data on
+        Slaves.
+        This is also where your webapp resides. The PoorMan API and your app
+        have a symbiotic relationship.
