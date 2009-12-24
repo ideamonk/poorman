@@ -112,7 +112,7 @@ API -
 
     On Slave -
 
-        * NOTE - each call here would look for Referrer in http headers.
+        * NOTE - some calls here would look for Referer in http headers.
                  This is a poor form of security, but as for now this is
                  what is there.
 
@@ -138,8 +138,11 @@ API -
             verify link
             return number of free bytes
 
-        /upload
+        /upload                                                             [+]
             verify master
             add [data,mime]
             redirect to http://master/add_upload
                 pass link, added key
+
+
+                
