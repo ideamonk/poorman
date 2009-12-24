@@ -47,7 +47,7 @@ class SetData(webapp.RequestHandler):
                 except db.KindError:
                     self.response.out.write ("key not found")
             else:
-                self.response.out.write("no authority on slave")
+                self.response.out.write("no authority on this slave")
 
 
 class GetData(webapp.RequestHandler):
@@ -62,21 +62,22 @@ class GetData(webapp.RequestHandler):
 
 class DelData(webapp.RequestHandler):
     def get(self,keyname):
-        '''  auth >>  del that key '''
+        ''' verify link
+            delete key '''
         if self.request.get('link') == __LINK__:
             try:
                 content = DataStore.get (keyname)
                 content.delete()
                 self.response.out.write("deleted")
             except:
-                self.response.out.write("bad key")
+                self.response.out.write("key not found")
         else:
-            self.response.out.write("You do not have authority over this poor man's slave.")
+            self.response.out.write("no authority on this slave")
                         
 class Banner(webapp.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write('This is a PoorMan\'s slave.')
+        self.response.out.write('This is a PoorMan\'s slave. Please leave it alone')
 
 application = webapp.WSGIApplication(
                             [

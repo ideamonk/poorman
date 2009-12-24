@@ -130,7 +130,7 @@ API -
             print out data with appropriate mime
             * free for all
 
-        /del/salve_key_name
+        /del/salve_key_name                                                 [+]
             verify link
             delete key
 
