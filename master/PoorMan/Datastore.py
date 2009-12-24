@@ -43,6 +43,14 @@ def update_stats():
     return json
 
 
+def get_upload_box(slave,extra):
+    slave_url = 'http://' + slave + '/upload'
+    form = '''  <form action="%s" method="POST" %s>
+                    <input type="file">
+                </form> ''' % ( slave_url, extra )
+    return form
+
+
 def set_data(_key, data, mime):
     url = 'http://' + get_rich_slave() + '/set'
     try:
