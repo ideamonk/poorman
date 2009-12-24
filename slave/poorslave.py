@@ -16,6 +16,13 @@ class SetData(webapp.RequestHandler):
         self.post()
 
     def post(self):
+        '''
+        verify master
+            if keyname='None' add [data,mime] to own datastore
+            else verify link,
+                    replace [data,mime] appropriately
+            return the keyname
+        '''
         self.response.headers['Content-Type'] = 'text/plain'
         
         # TODO: verify is referer is __MASTER__
@@ -42,21 +49,16 @@ class SetData(webapp.RequestHandler):
             else:
                 self.response.out.write("no authority on slave")
 
+
 class GetData(webapp.RequestHandler):
     def get(self,keyname):
-        '''
-            check if exists >>  get the record with id=id >>  print its mime
-            >> print its content
-        '''
         try:
             content = DataStore.get (keyname)
-            if (content != None):
-                self.response.headers['Content-Type'] = content.mime
-                self.response.out.write(content.data)
-            else:
-                self.response.out.write("not found")
+            self.response.headers['Content-Type'] = content.mime
+            self.response.out.write(content.data)
         except:
-            self.response.out.write("bad key")
+            self.response.out.write("key not found")
+
 
 class DelData(webapp.RequestHandler):
     def get(self,keyname):

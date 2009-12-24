@@ -126,7 +126,7 @@ API -
                 replace [data,mime] appropriately
             return the keyname
 
-        /get/slave_key_name
+        /get/slave_key_name                                                 [+]
             print out data with appropriate mime
             * free for all
 
