@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from google.appengine.ext import db
 from google.appengine.ext import webapp
+from google.appengine.ext.db import stats
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import urllib2
@@ -64,6 +65,7 @@ class DelData(webapp.RequestHandler):
     def get(self,keyname):
         ''' verify link
             delete key '''
+        self.response.headers['Content-Type'] = 'text/plain'
         if self.request.get('link') == __LINK__:
             try:
                 content = DataStore.get (keyname)
@@ -73,17 +75,27 @@ class DelData(webapp.RequestHandler):
                 self.response.out.write("key not found")
         else:
             self.response.out.write("no authority on this slave")
-                        
+
+class SendUpdate(webapp.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        if self.request.get('link') == __LINK__:
+            global_stat = stats.GlobalStat.all().get()
+            self.response.out.write("%d" % global_stat.bytes)
+        else:
+            self.response.out.write("no authority on this slave")
+            
 class Banner(webapp.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write('This is a PoorMan\'s slave. Please leave it alone')
+        self.response.out.write('This is a PoorMan\'s slave. Please leave it alone.')
 
 application = webapp.WSGIApplication(
                             [
                                 ('/get/(.*)', GetData),
                                 ('/set', SetData),
                                 ('/del/(.*)', DelData),
+                                ('/update', SendUpdate),
                                 ('/(.*)', Banner)
                             ],
                             debug=True)

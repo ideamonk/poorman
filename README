@@ -134,7 +134,8 @@ API -
             verify link
             delete key
 
-        /update
+        /update                                                             [+]
+            verify link
             return number of free bytes
 
         /upload
