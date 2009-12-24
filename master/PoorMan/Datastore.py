@@ -53,12 +53,10 @@ def get_url(_key):
     
     
 def get_data(_key):
-    '''
-    look for slave that has id
-    fetch data from crafted url
-    ignore 1st mime line
-    return remaining strinpped data
-    '''
+    url = get_url(_key)
+    result = urlfetch.fetch(url)
+    if result.status_code == 200:
+        return result.content
 
 def del_data(_key):
     '''

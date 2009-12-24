@@ -61,6 +61,7 @@ Models -
 
     * NOTE: slave always representa hostname eg. foo.appspot.com and not url
 
+
     On Slave -
         DataStore
             data, mime
@@ -85,11 +86,12 @@ API -
                 look for which slave has _key
                 return http://slave/get/slave_key_name
 
-        >   get_data(_key):                                                 [ ]
+        >   get_data(_key):                                                 [+]
                 url = get_url(_key)
-                fetch(url), ignore 1st mime line
-                return remaining stripped data
+                fetch(url), return data
+                
             * NOTE - this is very slow and resource consuming and not advisable
+                    instead try using ajax or get_url intelligently
 
         >   del_data(_key):                                                 [ ]
                 if _key exists:
