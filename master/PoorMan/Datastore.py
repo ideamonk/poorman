@@ -11,18 +11,40 @@ class MasterDataStore(db.Model):
     slave = db.StringProperty()
     slave_key_name = db.StringProperty()
 
+
 class PoorSlaves(db.Model):
     slave = db.StringProperty()
     bytes = db.IntegerProperty()
 
-def GetRichSlave():
+
+def get_rich_slave():
     # returns richest among the poor slaves
     query = PoorSlave.gql('ORDER BY bytes')
     best_node = query.fetch(1)
     return best_node[0].slave
-    
+
+
+def update_stats():
+    q = PoorSlaves.all()
+    nodes = q.fetch(limit=1000)
+    json = '['
+    for node in nodes:
+        url = 'http://' + node.slave + '/update'
+        result = urlfetch.fetch(url)
+        if result.status_code == 200:
+            try:
+                bytes = int(result.content)
+                node.bytes = bytes
+                node.put()
+                json = json + ('{"n":"%s","b":"%s"},' % (node.slave, bytes))
+            except:
+                ''' nothing to do with this node '''
+    json = json + ']'
+    return json
+
+
 def set_data(_key, data, mime):
-    url = 'http://' + GetRichSlave() + '/set'
+    url = 'http://' + get_rich_slave() + '/set'
     try:
         entry = MasterDataStore.get(_key)
         # _key exists
@@ -46,6 +68,7 @@ def set_data(_key, data, mime):
         entry.put()
         return result.content
 
+
 def get_url(_key):
     q = MasterDataStore.all().filter('keyname =', _key)
     entry = q.fetch(1)[0]
@@ -58,9 +81,13 @@ def get_data(_key):
     if result.status_code == 200:
         return result.content
 
+
 def del_data(_key):
-    '''
-    look for slave that holds the key
-    tell the slave to delete the key
-    return True/False
-    '''
+    try:
+        entry = MasterDataStore.get(_key)
+    except:
+        return 'key not found'
+    url = 'http://' + entry.slave + '/dev/' + entry.slave_key_name
+    result = urlfetch.fetch(url, payload = {'link':__LINK__}, method = 'GET')
+    if result.status_code == 200:
+        return result.content

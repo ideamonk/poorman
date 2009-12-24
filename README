@@ -93,11 +93,11 @@ API -
             * NOTE - this is very slow and resource consuming and not advisable
                     instead try using ajax or get_url intelligently
 
-        >   del_data(_key):                                                 [ ]
+        >   del_data(_key):                                                 [+]
                 if _key exists:
                     fetch ( http://slave_url/del/slave_key_name )
 
-        >   update_stats():                                                 [ ]
+        >   update_stats():                                                 [+]
                 for each slave:
                     query for free bytes
                 return a JSON
