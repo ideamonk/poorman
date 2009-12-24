@@ -59,6 +59,7 @@ Models -
         PoorSlaves
             slave, bytes
 
+    * NOTE: slave always representa hostname eg. foo.appspot.com and not url
 
     On Slave -
         DataStore
@@ -80,7 +81,7 @@ API -
                 on success make [ keyname, slave_url, slave_key_name ] entry
                 on fail notify
 
-        >   get_url(_key):                                                  [ ]
+        >   get_url(_key):                                                  [+]
                 look for which slave has _key
                 return http://slave/get/slave_key_name
 

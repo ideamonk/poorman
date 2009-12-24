@@ -4,7 +4,7 @@ from google.appengine.ext import db
 import urllib2
 import mimehack
 
-__LINK__ = "bXlwYXNzd29yZGlzc29zaW1wbGUK"
+__LINK__ = 'bXlwYXNzd29yZGlzc29zaW1wbGUK'
 
 class MasterDataStore(db.Model):
     keyname = db.StringProperty()
@@ -35,7 +35,7 @@ def set_data(_key, data, mime):
                 [('link', __LINK__), ('mime', mime)], [('data', 'data', data)] )
                 
 
-    result = urlfetch.fetch( url, payload=slave_data, method = "POST",
+    result = urlfetch.fetch( url, payload=slave_data, method = 'POST',
                     headers = {'Content-Type':content_type},
                     allow_truncated = False, follow_redirects = False,
                     deadline = 10)
@@ -47,13 +47,9 @@ def set_data(_key, data, mime):
         return result.content
 
 def get_url(_key):
-    '''
-    look for which slave has this key
-    return http://slave/get/22342352352
-    '''
-    q = MasterDataStore.all().filter("keyname =", _key)
+    q = MasterDataStore.all().filter('keyname =', _key)
     entry = q.fetch(1)[0]
-    return entry.slave + "/get/" + entry.slave_key_name
+    return 'http://' + entry.slave + '/get/' + entry.slave_key_name
     
     
 def get_data(_key):
