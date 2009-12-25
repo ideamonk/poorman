@@ -72,7 +72,7 @@ API -
 
     On Master -
     
-        >   set_data(_key, data, mime):                                     [+]
+        >   set_data(_key, data, mime):                                     [+]t
                 if _key exists in MasterDataStore:
                     call slave_url/set/ pass keyname=_key
                 else

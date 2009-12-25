@@ -13,7 +13,7 @@ class TestOut(webapp.RequestHandler):
         print "stored on slave as", keyname
         print "verification - ", pd.get_url('mynewkey')
         print 'storing image'
-        keyname = pd.set_data('mynewimage', open('static/test.png','rb').read(), 'image/png')
+        keyname = pd.set_data('mynewimage', open('static/test.jpg','rb').read(), 'image/jpeg')
         print "verification - ", pd.get_url('mynewimage')
 application = webapp.WSGIApplication(
                             [
