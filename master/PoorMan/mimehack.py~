@@ -21,7 +21,7 @@ def encode_multipart_formdata(fields, files):
         L.append('Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename))
         L.append('Content-Type: %s' % get_content_type(filename))
         L.append('')
-        #value = value.encode('string_escape')
+        value = value.encode('string_escape')
         L.append(value)
     L.append('--' + BOUNDARY + '--')
     L.append('')

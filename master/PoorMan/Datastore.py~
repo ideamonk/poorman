@@ -120,8 +120,6 @@ def del_data(_key):
                 '?link=' + __LINK__
     result = urlfetch.fetch(url, method = 'GET')
     if result.status_code == 200:
-        if (result.content == 'deleted'):
-            entry[0].delete()
         return result.content
     else:
         return 'key not found'

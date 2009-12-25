@@ -86,7 +86,7 @@ API -
                 look for which slave has _key
                 return http://slave/get/slave_key_name
 
-        >   get_data(_key):                                                 [+]t
+        >   get_data(_key):                                                 [+]
                 url = get_url(_key)
                 fetch(url), return data
                 
