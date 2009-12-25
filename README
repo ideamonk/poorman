@@ -119,7 +119,7 @@ API -
                  This is a poor form of security, but as for now this is
                  what is there.
 
-        /set                                                                [+]
+        /set                                                                [+]t
             verify master
             determine mime
             if keyname='None'
@@ -129,19 +129,19 @@ API -
                 replace [data,mime] appropriately
             return the keyname
 
-        /get/slave_key_name                                                 [+]
+        /get/slave_key_name                                                 [+]t
             print out data with appropriate mime
             * free for all
 
-        /del/salve_key_name                                                 [+]
+        /del/salve_key_name                                                 [+]t
             verify link
             delete key
 
-        /update                                                             [+]
+        /update                                                             [+]t
             verify link
-            return number of free bytes
+            return number of used bytes
 
-        /upload                                                             [+]
+        /upload                                                             [+]t
             verify master
             add [data,mime]
             redirect to http://master/add_upload

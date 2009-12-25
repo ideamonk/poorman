@@ -97,7 +97,7 @@ class Upload(webapp.RequestHandler):
         new_key = new_content.key()
         self.response.out.write (new_key)
         self.redirect('http://' + __MASTER__ + \
-                                '/add_upload/' + str(new_key) + \
+                                '/add_upload/' + new_key + \
                                 '?link=' + __LINK__ + \
                                 '&filename=' + filename )
 

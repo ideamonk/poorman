@@ -76,8 +76,7 @@ def set_data(_key, data, mime):
     except:
         # _key is new
         content_type, slave_data = mimehack.encode_multipart_formdata(
-                [('link', __LINK__), ('mime', mime), ('keyname','None')],
-                [('data', 'data', data)] )
+                [('link', __LINK__), ('mime', mime), ('keyname','None')], [('data', 'data', data)] )
                 
 
     result = urlfetch.fetch( url, payload=slave_data, method = 'POST',
