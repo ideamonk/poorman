@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import urlfetch
+from google.appengine.ext import webapp
 from google.appengine.ext import db
-import urllib2
 import mimehack
+import urllib2
+import time
 
 __LINK__ = 'bXlwYXNzd29yZGlzc29zaW1wbGUK'
 
@@ -16,7 +19,18 @@ class PoorSlaves(db.Model):
     slave = db.StringProperty()
     bytes = db.IntegerProperty()
 
-
+class AddUpload(webapp.RequestHandler):
+    def get(self,_key):
+        self.response.headers['Content-Type'] = 'text/plain'
+        if self.request.get('link') == __LINK__:
+            slave = self.request.headers.get('Referer').split(
+                                            'ttp://', 1)[1].split('/', 1)[0]
+            entry = MasterDataStore (keyname = self.request.get('filename') + \
+                        str(time.time()), slave = slave, slave_key_name = _key)
+            entry.put()
+        else:
+            self.response.out.write ('I am not your master son')
+        
 def get_rich_slave():
     # returns richest among the poor slaves
     query = PoorSlave.gql('ORDER BY bytes')
@@ -46,7 +60,7 @@ def update_stats():
 def get_upload_box(slave,extra):
     slave_url = 'http://' + slave + '/upload'
     form = '''  <form action="%s" method="POST" %s>
-                    <input type="file">
+                    <input type="file" name="poorupload">
                 </form> ''' % ( slave_url, extra )
     return form
 

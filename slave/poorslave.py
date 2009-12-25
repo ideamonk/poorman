@@ -4,6 +4,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.db import stats
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+import mimetypes
 import urllib2
 
 __LINK__ = 'bXlwYXNzd29yZGlzc29zaW1wbGUK'
@@ -85,7 +86,8 @@ class Upload(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'text/plain'
         # TODO: verify is referer is __MASTER__
         data_received = db.Blob(str(self.request.get('data'))
-        mime = self.request.get('mime')
+        filename = self.request.params["poorupload"].filename
+        mime = mimetypes.types_map['.' + filename.split('.', 1)[1]]
         
         new_content = DataStore(data=data_received, mime=mime)
         new_content.put()
@@ -93,7 +95,9 @@ class Upload(webapp.RequestHandler):
         new_key = new_content.key()
         self.response.out.write (new_key)
         self.redirect('http://' + __MASTER__ + \
-                                '/add_upload/' + new_key + '?link=' + __LINK__)
+                                '/add_upload/' + new_key + \
+                                '?link=' + __LINK__ + \
+                                '&filename=' + filename )
 
 
 class Banner(webapp.RequestHandler):

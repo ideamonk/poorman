@@ -108,7 +108,7 @@ API -
                 target - http://slave_url/upload/
                 extra - can be used to put class, style, etc into form
 
-        /add_upload                                                         [ ]
+        /add_upload                                                         [+]
             verify link
             add meta info
             
