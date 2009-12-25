@@ -102,7 +102,7 @@ API -
                     query for free bytes
                 return a JSON
 
-        >   get_upload_box(slave,extra):                                    [+]t
+        >   get_upload_box(slave,extra):                                    [+]
                 returns a basic form with a file upload element with appropriate
                 target, methods, etc.
                 target - http://slave_url/upload/

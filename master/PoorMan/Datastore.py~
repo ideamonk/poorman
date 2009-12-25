@@ -23,7 +23,8 @@ class AddUpload(webapp.RequestHandler):
     def get(self,_key):
         self.response.headers['Content-Type'] = 'text/plain'
         if self.request.get('link') == __LINK__:
-            slave = self.request.get('slavename')
+            slave = self.request.headers.get('Referer').split(
+                                            'ttp://', 1)[1].split('/', 1)[0]
             keyname = self.request.get('filename') + str(time.time())
             entry = MasterDataStore (keyname = keyname, slave = slave,
                                                         slave_key_name = _key)
